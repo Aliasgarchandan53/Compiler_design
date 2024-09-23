@@ -1,2 +1,4 @@
 #all executable files
 *.exe
+#ignore vscode 
+/.vscode
