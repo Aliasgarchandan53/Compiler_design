@@ -1,8 +1,4 @@
 #include <bits/stdc++.h>
-/*
-
-#include <iomanip> // for setw()
-*/
 using namespace std;
 
 #define epsilon 'e' 
@@ -243,12 +239,10 @@ void result(){
     }
 }
 
-//chatgpt's function to print table
+//function to print table
 void printParsingTableAsTable() {
-    const int cellWidth = 12; // Set width for each cell (10 for RHS + 2 for padding)
-    
-    // Gather all terminals for printing headers
-    set<char> terminalsSet;  // To avoid duplicate terminals
+    const int cellWidth = 12; 
+    set<char> terminalsSet;  
 
     // Collect all terminals in a set
     for (const auto& ntEntry : ParsingTable) {
@@ -257,59 +251,54 @@ void printParsingTableAsTable() {
         }
     }
 
-    vector<char> terminals(terminalsSet.begin(), terminalsSet.end());  // Convert set to vector
-
-    // Print the top border
+    vector<char> terminals(terminalsSet.begin(), terminalsSet.end());  
+    // top border
     cout << "+" << string(cellWidth - 1, '-') ;
     for (const char& terminal : terminals) {
-        cout << "+" << string(cellWidth - 1, '-') ;  // Each terminal header has a border
+        cout << "+" << string(cellWidth - 1, '-') ; 
     }
     cout << "+" << endl;
 
-    // Print table headers (terminals)
-    cout << "|" << setw(cellWidth) << " NT/T ";  // Heading for the non-terminal row
+    //table headers (terminals)
+    cout << "|" << setw(cellWidth) << " NT/T ";  
     for (const char& terminal : terminals) {
-        cout << "|" << setw(cellWidth) << terminal;  // Print each terminal as a header
+        cout << "|" << setw(cellWidth) << terminal;  
     }
     cout << "|" << endl;
 
-    // Print the header border again
     cout << "+" << string(cellWidth - 1, '-') ;
     for (const char& terminal : terminals) {
-        cout << "+" << string(cellWidth - 1, '-') ;  // Each terminal header has a border
+        cout << "+" << string(cellWidth - 1, '-') ;  
     }
     cout << "+" << endl;
 
-    // Print rows (non-terminals)
+    //rows (non-terminals)
     for (const auto& ntEntry : ParsingTable) {
         char nonTerminal = ntEntry.first;
-        cout << "|" << setw(cellWidth) << nonTerminal;  // Print the non-terminal as the row header
+        cout << "|" << setw(cellWidth) << nonTerminal;  
 
         // For each terminal, print the corresponding production
         for (const char& terminal : terminals) {
             cout << "|";  // Start a new cell
             if (ntEntry.second.find(terminal) != ntEntry.second.end()) {
-                // If there is a production for this (nonTerminal, terminal) pair, print it
-                const auto& prods = ntEntry.second.at(terminal);
-                
+                const auto& prods = ntEntry.second.at(terminal);                
                 string productionList;
                 for (const Production& prod : prods) {
                     productionList += prod.lhs + "->" + prod.rhs + " | ";  // Join productions
                 }
                 if (!productionList.empty()) {
-                    productionList = productionList.substr(0, productionList.size() - 3); // Remove last " | "
+                    productionList = productionList.substr(0, productionList.size() - 3); 
                 }
                 cout << setw(cellWidth) << productionList;  // Print production
             } else {
-                cout << setw(cellWidth) << "-";  // Print '-' if there's no production
+                cout << setw(cellWidth) << "-";  //if there's no production
             }
         }
         cout << "|" << endl;
 
-        // Print the border after each row
         cout << "+" << string(cellWidth - 1, '-') ;
         for (const char& terminal : terminals) {
-            cout << "+" << string(cellWidth - 1, '-') ;  // Each terminal header has a border
+            cout << "+" << string(cellWidth - 1, '-') ;  
         }
         cout << "+" << endl;
     }
@@ -317,15 +306,12 @@ void printParsingTableAsTable() {
 
 // Helper function to print the current state of the stack, input buffer, and action
 void printParsingStep(stack<char> stk, string inputBuffer, string action) {
-    // Convert stack to a printable string (reverse to display top of the stack on the right)
     string stackContents;
     stack<char> temp = stk;
     while (!temp.empty()) {
         stackContents +=temp.top();
         temp.pop();
     }
-
-    // Print current state
     cout << setw(20) << left << stackContents
          << setw(20) << left << inputBuffer
          << setw(30) << left << action << endl;
@@ -341,7 +327,7 @@ void ll1_parser() {
         if(!isTerminal(inputBuffer[i]))
             inputBuffer[i]='i';
     }
-    inputBuffer += '$';  // Append end marker to the input buffer
+    inputBuffer += '$';  //$ at end
 
     stack<char> stk;
     stk.push('$');
@@ -349,7 +335,6 @@ void ll1_parser() {
 
     bool parsed = false;
 
-    // Print table headers
     cout << setw(20) << left << "Stack"
          << setw(20) << left << "Input Buffer"
          << setw(30) << left << "Action" << endl;
