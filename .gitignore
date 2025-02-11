@@ -2,3 +2,5 @@
 *.exe
 #ignore vscode 
 /.vscode
+lex.yy.c
+*.out
