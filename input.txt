@@ -1,0 +1,9 @@
+int main() {
+  int a = 123;
+  int b = 321;
+  int k = 0;
+  if(k!=0){
+    return -1;
+  }
+  return 0;
+}

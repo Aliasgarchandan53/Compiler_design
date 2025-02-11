@@ -637,6 +637,7 @@ void result()
 }
 
 int main()
+
 {
     ReadGrammar();
     AugmentedGrammar();
